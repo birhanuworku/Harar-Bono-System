@@ -224,3 +224,29 @@
         display: block;
     }
 }
+.navbar .nav-link {
+    color: $nav-link-color; 
+  
+    &:hover {
+      background-color: $success; 
+      color: $white !important;   
+      border-radius: 5px;         
+      transition: background-color 0.7s ease, color 0.7s ease; 
+    }
+  
+    img {
+      opacity: inherit;
+      transition: $transition-base;
+    }
+  
+    span {
+      position: relative;
+    }
+  }
+  .sticky-navbar {
+    position: sticky; 
+    top: 0;
+    z-index: 1030; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  }
+  
