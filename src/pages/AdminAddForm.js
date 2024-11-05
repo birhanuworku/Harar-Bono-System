@@ -13,13 +13,11 @@ import { Routes } from "../routes";
 
 const UserAddForm = () => {
   const [employee, setEmployee] = useState({
-    title: "",
     firstName: "",
     middleName: "",
     lastName: "",
     gender: "",
     email: "",
-    dob: "",
     phone: "",
     password: "",
     confirmPassword: "",
@@ -40,22 +38,8 @@ const UserAddForm = () => {
   return (
     <Form>
       <h5 className="mb-3">Add Admins to Your System:</h5>
-      <hr></hr>
+      <hr />
       <Row className="mb-3">
-        <Form.Group as={Col} controlId="formTitle">
-          <Form.Label>Title*</Form.Label>
-          <Form.Select
-            name="title"
-            value={employee.title}
-            onChange={handleInputChange}
-          >
-            <option>Please select title</option>
-            <option>Mr.</option>
-            <option>Ms.</option>
-            <option>Mrs.</option>
-          </Form.Select>
-        </Form.Group>
-
         <Form.Group as={Col} controlId="formFirstName">
           <Form.Label>First Name*</Form.Label>
           <Form.Control
@@ -64,19 +48,6 @@ const UserAddForm = () => {
             value={employee.firstName}
             onChange={handleInputChange}
             placeholder="Enter first name"
-          />
-        </Form.Group>
-      </Row>
-
-      <Row className="mb-3">
-        <Form.Group as={Col} controlId="formMiddleName">
-          <Form.Label>Middle Name</Form.Label>
-          <Form.Control
-            type="text"
-            name="middleName"
-            value={employee.middleName}
-            onChange={handleInputChange}
-            placeholder="Enter middle name"
           />
         </Form.Group>
 
@@ -93,6 +64,17 @@ const UserAddForm = () => {
       </Row>
 
       <Row className="mb-3">
+        <Form.Group as={Col} controlId="formMiddleName">
+          <Form.Label>Middle Name</Form.Label>
+          <Form.Control
+            type="text"
+            name="middleName"
+            value={employee.middleName}
+            onChange={handleInputChange}
+            placeholder="Enter middle name"
+          />
+        </Form.Group>
+
         <Form.Group as={Col} controlId="formGender">
           <Form.Label>Gender*</Form.Label>
           <Form.Select
@@ -104,18 +86,6 @@ const UserAddForm = () => {
             <option>Female</option>
             <option>Other</option>
           </Form.Select>
-        </Form.Group>
-
-        <Form.Group as={Col} controlId="formDob">
-          <Form.Label>Date of Birth*</Form.Label>
-          <InputGroup>
-            <Form.Control
-              type="date"
-              name="dob"
-              value={employee.dob}
-              onChange={handleInputChange}
-            />
-          </InputGroup>
         </Form.Group>
       </Row>
 

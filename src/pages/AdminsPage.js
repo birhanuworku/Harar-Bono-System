@@ -29,7 +29,7 @@ export default () => {
       </div>
       <Button
         as={Link}
-        to={Routes.UserAddForm.path}
+        to={Routes.AdminAddForm.path}
         variant="success"
         className="fw-bold"
       >

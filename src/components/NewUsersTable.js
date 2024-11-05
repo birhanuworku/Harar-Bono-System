@@ -36,6 +36,8 @@ export const NewUsersTable = () => {
     firstName: "",
     middleName: "",
     amount: "",
+    chatType: "",
+    paidStatus: "",
   });
   const [isGenerating, setIsGenerating] = useState(false); // New state for loading
   const [progress, setProgress] = useState(0); // State for download progress
@@ -46,8 +48,8 @@ export const NewUsersTable = () => {
   };
 
   const handleGenerateClick = async () => {
-    setIsGenerating(true); // Set loading to true when generation starts
-    setProgress(0); // Reset progress
+    setIsGenerating(true);
+    setProgress(0);
 
     const doc = new jsPDF();
     const margin = 10;
@@ -70,6 +72,8 @@ export const NewUsersTable = () => {
         value: employee.middleName,
       },
       { label: "Amount in ETB of the Chat Paid:", value: employee.amount },
+      { label: "Chat Type:", value: employee.chatType },
+      { label: "Paid Status:", value: employee.paidStatus },
       {
         label: "Date of Bono Generated:",
         value: new Date().toLocaleDateString(),
@@ -78,7 +82,6 @@ export const NewUsersTable = () => {
 
     let yOffset = margin + 25;
 
-    // Simulating progress of PDF generation
     for (let i = 0; i < details.length; i++) {
       const lineHeight = 10;
       const detailHeight = 10;
@@ -87,15 +90,27 @@ export const NewUsersTable = () => {
       doc.text(details[i].label, margin + 5, yOffset + i * lineHeight + 7);
       doc.text(details[i].value, margin + 120, yOffset + i * lineHeight + 7);
 
-      // Update progress
       setProgress(((i + 1) / details.length) * 100);
-      await new Promise((resolve) => setTimeout(resolve, 100)); // Simulate time delay
+      await new Promise((resolve) => setTimeout(resolve, 100));
     }
 
-    doc.addImage(stampImage, "PNG", 50, 100, 100, 100, undefined, "FAST"); // Overmark stamp at center
+    doc.addImage(stampImage, "PNG", 50, 100, 100, 100, undefined, "FAST");
 
-    doc.save("bono-details.pdf");
-    setIsGenerating(false); // Set loading to false when generation completes
+    const pdfBlob = doc.output("blob");
+    const pdfUrl = URL.createObjectURL(pdfBlob);
+
+    // Open PDF in a new window and trigger print dialog
+    const newWindow = window.open(pdfUrl, "_blank");
+    if (newWindow) {
+      newWindow.onload = () => {
+        newWindow.print();
+        URL.revokeObjectURL(pdfUrl); // Clean up the blob URL after printing
+      };
+    } else {
+      console.error("Failed to open new window for printing.");
+    }
+
+    setIsGenerating(false);
     setShowModal(false);
   };
 
@@ -211,7 +226,7 @@ export const NewUsersTable = () => {
           <Row>
             <Col md={6}>
               <Form>
-                <h3 className="mb-3">Generate bono for user:</h3>
+                <h4 className="mb-3">Bono Data:</h4>
                 <hr />
                 <Row className="mb-3">
                   <Form.Group as={Col} controlId="formFirstName">
@@ -249,6 +264,38 @@ export const NewUsersTable = () => {
                       onChange={handleInputChange}
                       placeholder="Enter Amount"
                     />
+                  </Form.Group>
+                </Row>
+
+                <Row className="mb-3">
+                  <Form.Group as={Col} controlId="formChatType">
+                    <Form.Label>Chat Type*</Form.Label>
+                    <Form.Select
+                      name="chatType"
+                      value={employee.chatType}
+                      onChange={handleInputChange}
+                    >
+                      <option>Please select chat type</option>
+                      <option>Private</option>
+                      <option>Group</option>
+                      <option>Broadcast</option>
+                    </Form.Select>
+                  </Form.Group>
+                </Row>
+
+                <Row className="mb-3">
+                  <Form.Group as={Col} controlId="formPaidStatus">
+                    <Form.Label>Paid Status*</Form.Label>
+                    <Form.Select
+                      name="paidStatus"
+                      value={employee.paidStatus}
+                      onChange={handleInputChange}
+                    >
+                      <option>Please select paid status</option>
+                      <option>Paid</option>
+                      <option>Unpaid</option>
+                      <option>Pending</option>
+                    </Form.Select>
                   </Form.Group>
                 </Row>
 
@@ -296,7 +343,7 @@ export const NewUsersTable = () => {
 
             <Col md={6} className="border-start">
               <div>
-                <h3>Summary of the Bono:</h3>
+                <h4>Summary of the Bono:</h4>
                 <p>
                   <strong>Name of the Company:</strong> Harar Bono System
                 </p>
@@ -308,6 +355,12 @@ export const NewUsersTable = () => {
                 </p>
                 <p>
                   <strong>Amount:</strong> {employee.amount} ETB
+                </p>
+                <p>
+                  <strong>Chat Type:</strong> {employee.chatType}
+                </p>
+                <p>
+                  <strong>Paid Status:</strong> {employee.paidStatus}
                 </p>
               </div>
             </Col>

@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  Form,
-  Button,
-  Col,
-  Row,
-  InputGroup,
-} from "@themesberg/react-bootstrap";
+import { Form, Button, Col, Row } from "@themesberg/react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -13,17 +7,12 @@ import { Routes } from "../routes";
 
 const UserAddForm = () => {
   const [employee, setEmployee] = useState({
-    title: "",
     firstName: "",
     middleName: "",
     lastName: "",
-    gender: "",
-    email: "",
-    dob: "",
     phone: "",
-    password: "",
-    confirmPassword: "",
-    role: "",
+    chatType: "",
+    paidStatus: "",
   });
 
   const history = useHistory();
@@ -42,20 +31,6 @@ const UserAddForm = () => {
       <h5 className="mb-3">Add New User</h5>
 
       <Row className="mb-3">
-        <Form.Group as={Col} controlId="formTitle">
-          <Form.Label>Title*</Form.Label>
-          <Form.Select
-            name="title"
-            value={employee.title}
-            onChange={handleInputChange}
-          >
-            <option>Please select title</option>
-            <option>Mr.</option>
-            <option>Ms.</option>
-            <option>Mrs.</option>
-          </Form.Select>
-        </Form.Group>
-
         <Form.Group as={Col} controlId="formFirstName">
           <Form.Label>First Name*</Form.Label>
           <Form.Control
@@ -64,19 +39,6 @@ const UserAddForm = () => {
             value={employee.firstName}
             onChange={handleInputChange}
             placeholder="Enter first name"
-          />
-        </Form.Group>
-      </Row>
-
-      <Row className="mb-3">
-        <Form.Group as={Col} controlId="formMiddleName">
-          <Form.Label>Middle Name</Form.Label>
-          <Form.Control
-            type="text"
-            name="middleName"
-            value={employee.middleName}
-            onChange={handleInputChange}
-            placeholder="Enter middle name"
           />
         </Form.Group>
 
@@ -93,41 +55,14 @@ const UserAddForm = () => {
       </Row>
 
       <Row className="mb-3">
-        <Form.Group as={Col} controlId="formGender">
-          <Form.Label>Gender*</Form.Label>
-          <Form.Select
-            name="gender"
-            value={employee.gender}
-            onChange={handleInputChange}
-          >
-            <option>Male</option>
-            <option>Female</option>
-            <option>Other</option>
-          </Form.Select>
-        </Form.Group>
-
-        <Form.Group as={Col} controlId="formDob">
-          <Form.Label>Date of Birth*</Form.Label>
-          <InputGroup>
-            <Form.Control
-              type="date"
-              name="dob"
-              value={employee.dob}
-              onChange={handleInputChange}
-            />
-          </InputGroup>
-        </Form.Group>
-      </Row>
-
-      <Row className="mb-3">
-        <Form.Group as={Col} controlId="formEmail">
-          <Form.Label>Email Address*</Form.Label>
+        <Form.Group as={Col} controlId="formMiddleName">
+          <Form.Label>Middle Name</Form.Label>
           <Form.Control
-            type="email"
-            name="email"
-            value={employee.email}
+            type="text"
+            name="middleName"
+            value={employee.middleName}
             onChange={handleInputChange}
-            placeholder="Enter email"
+            placeholder="Enter middle name"
           />
         </Form.Group>
 
@@ -144,41 +79,31 @@ const UserAddForm = () => {
       </Row>
 
       <Row className="mb-3">
-        <Form.Group as={Col} controlId="formPassword">
-          <Form.Label>Password*</Form.Label>
-          <Form.Control
-            type="password"
-            name="password"
-            value={employee.password}
-            onChange={handleInputChange}
-            placeholder="Enter password"
-          />
-        </Form.Group>
-
-        <Form.Group as={Col} controlId="formConfirmPassword">
-          <Form.Label>Confirm Password*</Form.Label>
-          <Form.Control
-            type="password"
-            name="confirmPassword"
-            value={employee.confirmPassword}
-            onChange={handleInputChange}
-            placeholder="Confirm password"
-          />
-        </Form.Group>
-      </Row>
-
-      <Row className="mb-3">
-        <Form.Group as={Col} controlId="formRole">
-          <Form.Label>Role*</Form.Label>
+        <Form.Group as={Col} controlId="formChatType">
+          <Form.Label>Chat Type*</Form.Label>
           <Form.Select
-            name="role"
-            value={employee.role}
+            name="chatType"
+            value={employee.chatType}
             onChange={handleInputChange}
           >
-            <option>Please select role</option>
-            <option>Admin</option>
-            <option>Manager</option>
-            <option>Employee</option>
+            <option>Please select chat type</option>
+            <option>Private</option>
+            <option>Group</option>
+            <option>Broadcast</option>
+          </Form.Select>
+        </Form.Group>
+
+        <Form.Group as={Col} controlId="formPaidStatus">
+          <Form.Label>Paid Status*</Form.Label>
+          <Form.Select
+            name="paidStatus"
+            value={employee.paidStatus}
+            onChange={handleInputChange}
+          >
+            <option>Please select paid status</option>
+            <option>Paid</option>
+            <option>Unpaid</option>
+            <option>Pending</option>
           </Form.Select>
         </Form.Group>
       </Row>
@@ -194,7 +119,7 @@ const UserAddForm = () => {
           className="fw-bold"
         >
           Save
-        </Button>{" "}
+        </Button>
       </div>
     </Form>
   );
