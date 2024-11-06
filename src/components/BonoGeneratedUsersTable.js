@@ -1,3 +1,4 @@
+// BonoGeneratedUsersTable.js
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -7,24 +8,24 @@ import {
   faTrashAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import {
-  Nav,
   Card,
   Button,
   Table,
   Dropdown,
-  Pagination,
   ButtonGroup,
 } from "@themesberg/react-bootstrap";
 import { Link } from "react-router-dom";
 
 import UsersData from "../data/UsersData";
 
-export const BonoGeneratedUsersTable = () => {
-  const totalUsers = UsersData.length;
+export const BonoGeneratedUsersTable = React.forwardRef((props, ref) => {
+  // Use React.forwardRef to expose data access to parent component
+  React.useImperativeHandle(ref, () => ({
+    getData: () => UsersData,
+  }));
 
   const TableRow = (props) => {
-    const { invoiceNumber, subscription, price, issueDate, dueDate, status } =
-      props;
+    const { invoiceNumber, subscription, price, issueDate, dueDate } = props;
     return (
       <tr>
         <td>
@@ -102,23 +103,9 @@ export const BonoGeneratedUsersTable = () => {
             ))}
           </tbody>
         </Table>
-        <Card.Footer className="border-0 d-lg-flex align-items-center justify-content-between p-0">
-          <Nav>
-            <Pagination className="mb-2 mb-lg-0">
-              <Pagination.Prev>Previous</Pagination.Prev>
-              <Pagination.Item active>1</Pagination.Item>
-              <Pagination.Item>2</Pagination.Item>
-              <Pagination.Item>3</Pagination.Item>
-              <Pagination.Item>4</Pagination.Item>
-              <Pagination.Item>5</Pagination.Item>
-              <Pagination.Next>Next</Pagination.Next>
-            </Pagination>
-          </Nav>
-          <small className="fw-bold">
-            Showing <b>{totalUsers}</b> out of <b>25</b> entries
-          </small>
-        </Card.Footer>
       </Card.Body>
     </Card>
   );
-};
+});
+
+export default BonoGeneratedUsersTable;

@@ -16,16 +16,28 @@ import {
   Dropdown,
 } from "@themesberg/react-bootstrap";
 import { Link } from "react-router-dom";
+import * as XLSX from "xlsx";
 
 import { NewUsersTable } from "../components/NewUsersTable";
 import { Routes } from "../routes";
+import UsersData from "../data/UsersData"; // Import the UsersData directly
 
 export default () => {
+  const handleDownload = () => {
+    // Convert UsersData to a worksheet
+    const worksheet = XLSX.utils.json_to_sheet(UsersData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "User Data");
+
+    // Trigger Excel file download
+    XLSX.writeFile(workbook, "UserData.xlsx");
+  };
+
   return (
     <>
       <div>
         <h2>Your New Users:</h2>
-        <hr></hr>
+        <hr />
       </div>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
         <div className="d-flex align-items-center">
@@ -75,18 +87,9 @@ export default () => {
               style={{
                 borderRadius: "8px",
               }}
+              onClick={handleDownload}
             >
               Download
-            </Button>
-            <Button
-              variant="success"
-              size="lg"
-              className="rounded fw-bold"
-              style={{
-                borderRadius: "8px",
-              }}
-            >
-              Export
             </Button>
           </ButtonGroup>
         </div>

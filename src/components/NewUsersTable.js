@@ -258,7 +258,7 @@ export const NewUsersTable = () => {
                   <Form.Group as={Col} controlId="formAmount">
                     <Form.Label>Amount</Form.Label>
                     <Form.Control
-                      type="text"
+                      type="number"
                       name="amount"
                       value={employee.amount}
                       onChange={handleInputChange}

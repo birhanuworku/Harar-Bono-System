@@ -1,4 +1,5 @@
-import React from "react";
+// BonoGeneratedUsers.js
+import React, { useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearch,
@@ -16,16 +17,32 @@ import {
   Dropdown,
 } from "@themesberg/react-bootstrap";
 import { Link } from "react-router-dom";
+import * as XLSX from "xlsx";
 
-import { BonoGeneratedUsersTable } from "../components/BonoGeneratedUsersTable";
+import BonoGeneratedUsersTable from "../components/BonoGeneratedUsersTable";
 import { Routes } from "../routes";
 
 export default () => {
+  const tableRef = useRef(null); // Reference to access getData in BonoGeneratedUsersTable
+
+  const handleDownload = () => {
+    // Retrieve data from BonoGeneratedUsersTable
+    const data = tableRef.current.getData();
+
+    // Convert data to Excel format
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Bono Generated Users");
+
+    // Trigger Excel file download
+    XLSX.writeFile(workbook, "BonoGeneratedUsersData.xlsx");
+  };
+
   return (
     <>
       <div>
         <h2>Your Bono Generated Users:</h2>
-        <hr></hr>
+        <hr />
       </div>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
         <div className="d-flex align-items-center">
@@ -75,18 +92,9 @@ export default () => {
               style={{
                 borderRadius: "8px",
               }}
+              onClick={handleDownload}
             >
               Download
-            </Button>
-            <Button
-              variant="success"
-              size="lg"
-              className="rounded fw-bold"
-              style={{
-                borderRadius: "8px",
-              }}
-            >
-              Export
             </Button>
           </ButtonGroup>
         </div>
@@ -139,7 +147,7 @@ export default () => {
         </Row>
       </div>
 
-      <BonoGeneratedUsersTable />
+      <BonoGeneratedUsersTable ref={tableRef} />
     </>
   );
 };
